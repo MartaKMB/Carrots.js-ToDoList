@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>to do list</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+    <div class="page_container">
+
+        <header>
+            <h1>TO DO LIST</h1>
+        </header>
+
+        <main>
+
+            <section class="add_task_section">
+                <input type="text" name="item" id="user_input" placeholder="add what you want to do">
+                <button id="id_button_add">ADD</button>
+            </section>
+
+            <section class="msg_section">
+                <h4 id="message_for_user"></h4>
+            </section>
+
+            <section class="tasks_section">
+                <ul id="todo_list">
+                    <li>
+                        <textarea rows="3" cols="30">take over the world (before Pinky and The Brain)</textarea>
+                        <label>set your deadline:
+                          <input type="date" class="input_date">
+                        </label>
+                        <button class="button_delete delete_before">done<span class="question">?</span></button>
+                    </li>
+
+                    <li>
+                        <textarea rows="3" cols="30">find sense of meaning in life</textarea>
+                        <label>set your deadline:
+                          <input type="date" class="input_date">
+                        </label>
+                        <button class="button_delete delete_before">done<span class="question">?</span></button>
+                    </li>
+
+                    <li>
+                        <textarea rows="3" cols="30">catch The Monster That Stole My Pink Sock</textarea>
+                        <label>set your deadline:
+                          <input type="date" class="input_date">
+                        </label>
+                        <button class="button_delete delete_before">done!</button>
+                    </li>
+                </ul>
+
+                <div class="buttons">
+                    <button id="btn_sort" class="btn_sort">SORT BY DATE</button>
+                    <button id="id_button_clear" class="btn_clear_all">CLEAR ALL</button>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div>app designed by: <a href="https://www.linkedin.com/in/marta-mucha-balcerek-99012113b/" target="_blank">Marta Mucha-Balcerek</a> &copy; 2017</div>
+        </footer>
+
+    </div>
+    
+    <script src="script.js"></script>
+
+</body>
+
+</html>
