@@ -11,6 +11,7 @@ body { width: 100vw; min-height: 100vh; padding: 4rem; font-family: "ABeeZee", s
 
 header { text-align: center; font-size: 2.6rem; padding: 1rem; font-family: "Reenie Beanie", cursive; }
 
+main { width: 75vw; margin-left: auto; margin-right: auto; }
 main .add_task_section { display: -ms- flex; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; padding: 2rem; }
 main .add_task_section input { flex-basis: 75%; margin: .4rem; height: 4rem; text-align: center; font-family: "ABeeZee", sans-serif; font-size: 1.4rem; border-radius: .5rem; background: #ffff88; color: #ff1a1a; border: 1px solid #ffffc6; }
 main .add_task_section button { flex-basis: 20%; height: 4rem; font-family: "ABeeZee", sans-serif; font-size: 1.8rem; letter-spacing: .2rem; border-radius: .5rem; background-color: #ff1a1a; border: 1px solid #ff1a1a; color: #ffffc6; }

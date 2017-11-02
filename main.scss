@@ -66,6 +66,11 @@ header {
 }
 
 main {
+    width: 75vw;
+    margin: {
+        left: auto;
+        right: auto;
+    }
 
     .add_task_section {
         @include flex_mixin(flex);
@@ -73,9 +78,10 @@ main {
         align-items: center;
         flex-wrap: wrap;
         padding: 2rem;
+        
 
         input {
-            flex-basis: 75%; //min-width: 22rem;
+            flex-basis: 75%; 
             margin: .4rem;
             height: 4rem;
             text-align: center;

@@ -75,30 +75,6 @@ function addTask() {
     
     list.appendChild(li_list);
   }
-  
-  /* sorting - in progress*/
-  
-  btn_sort.addEventListener('click', (e) => {
-    let date_array = document.querySelectorAll('.input_date');
-    let first_nearest_date = date_array[0].value;
-    
-    // const li_to_sort = document.querySelectorAll('li');
-  
-    for(let i = 1; i < date_array.length; i++) {
-      let check_nearest_date = date_array[i].value;
-       let diff_date = new Date(first_nearest_date) - new Date(check_nearest_date);
-      
-       if(diff_date >= 0) {
-         first_nearest_date = check_nearest_date;
-         alert(first_nearest_date + ' różnica: ' + diff_date);
-        
-       } else {
-         alert(first_nearest_date + ' first is first, różnica' + diff_date);
-       }
-      
-     }
-    
-  });
     
   /* delete one task */
     
@@ -110,32 +86,11 @@ function liDisappear(delBtn) {
    delBtn.parentNode.style.display = 'none';
 }
 
-/* sorting - in progress */
-
-/* help from: https://developer.mozilla.org/en-US/docs/Web/Events/change */
-/* ja tego do końca nie rozumiem, ale... ;) */
-function changeEventHandler(event) {
-    if(!event.target.value){
-      alert('Please Select Date');
-    } else {
-      let get_date = event.target.value;
-      alert(get_date); 
-      
-      //return get_date;
-      
-    } 
-}
 
 function oneDelete(array) {
    for(let i = 0; i < array.length; i++) {
-      
-      /* UWAGA! pytanie do wspaniałych i najmądrzejszych, najwyrozumialszych mentorów, dlaczego, jak robiłam zapis "(e) =>" nie działało? + i nie do końca rozumiem "this" */
       array[i].addEventListener('click', function() {
         liDisappear(this);                                    
       });
     }
 }
-
-/* Zapis i odczyt w localstorage - jeszcze nie umiem ;) */
-/* Powiadomienia dla przeglądarki - JESZCZE nie umiem ;) */
-/* ale to podobno będzie na kolejnych zajęciach, więc cierpliwie poczekam*/
