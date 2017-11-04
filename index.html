@@ -18,10 +18,13 @@
 
         <main>
 
-            <section class="add_task_section">
+            <form class="add_task_section" id="add_form">
                 <input type="text" name="item" id="user_input" placeholder="add what you want to do">
-                <button id="id_button_add">ADD</button>
-            </section>
+                <label>set your deadline:
+                    <input type="date" name="item_date" id="item_date" placeholder="set deadline">
+                </label>
+                <button id="id_button_add" type="button">ADD</button>
+            </form>
 
             <section class="msg_section">
                 <h4 id="message_for_user"></h4>
@@ -30,26 +33,20 @@
             <section class="tasks_section">
                 <ul id="todo_list">
                     <li>
-                        <textarea rows="3" cols="30">take over the world (before Pinky and The Brain)</textarea>
-                        <label>set your deadline:
-                          <input type="date" class="input_date">
-                        </label>
+                        <textarea rows="3" cols="30">take over the world</textarea>
+                        <p>your deadline: before Pinky and The Brain</p>
                         <button class="button_delete delete_before">done!</button>
                     </li>
 
                     <li>
                         <textarea rows="3" cols="30">find sense of meaning in life</textarea>
-                        <label>set your deadline:
-                          <input type="date" class="input_date">
-                        </label>
+                        <p>your deadline: as soon as possible</p>
                         <button class="button_delete delete_before">done!</button>
                     </li>
 
                     <li>
                         <textarea rows="3" cols="30">catch The Monster That Stole My Pink Sock</textarea>
-                        <label>set your deadline:
-                          <input type="date" class="input_date">
-                        </label>
+                        <p>your deadline: tonight!</p>
                         <button class="button_delete delete_before">done!</button>
                     </li>
                 </ul>

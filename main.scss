@@ -81,7 +81,7 @@ main {
         
 
         input {
-            flex-basis: 75%; 
+            flex-basis: 32%; 
             margin: .4rem;
             height: 4rem;
             text-align: center;
@@ -91,6 +91,11 @@ main {
             background: #ffff88;
             color: #ff1a1a;
             border: 1px solid #ffffc6;
+        }
+        
+        label {
+            font-size: 1.4rem;
+            color: grey;
         }
 
         button {
@@ -176,19 +181,12 @@ main {
                     border: 1px solid #ffff88;
                 }
 
-                label {
+                p {
                     padding: .4rem;
+                    margin-top: 0;
                     font-family: $font_app;
-                    text-align: right;
-                    input {
-                        color: #ff1a1a;
-                        font-family: $font_app;
-                        text-align: right;
-                        font-size: 1.4rem;
-                        font-weight: 700;
-                        background: #ffff88;
-                        border: 1px solid #ffff88;
-                    }
+                    font-size: 1.2rem;
+                    color: #ff1a1a;
                 }
 
                 .button_delete {
