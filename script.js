@@ -8,23 +8,39 @@ const msg = document.querySelector('#message_for_user');
 let todos = [];
 
 const add_form = document.querySelector('#add_form');
-/* delete default tasks before add sth */
 
-let btn_array_before = document.querySelectorAll('.delete_before');
-oneDelete(btn_array_before);
+/* delete default tasks before add sth */
+// let btn_array_before = document.querySelectorAll('.delete_before');
+// oneDelete(btn_array_before);
+
+getFromStorage();
+addTask();
 
 /* add tasks*/
 
 btn_add.addEventListener('click', (e) => {
     pushToArray(getData(add_form));
 //    console.log(todos);
-    addTask();
+    let user_input = document.querySelector('#user_input').value;
+    if (user_input === '') {
+        msg.innerHTML = 'put your task in input above';
+    } else {
+        addTask();
+    }
 });
 
 document.querySelector('#user_input').addEventListener('keydown', (e) => {
     if (e.which === 13) {
+        
         pushToArray(getData(add_form));
+        
+        let user_input = document.querySelector('#user_input').value;
+
+    if (user_input === '') {
+        msg.innerHTML = 'put your task in input above';
+    } else {
         addTask();
+    }
     }
 });
 
@@ -37,11 +53,7 @@ btn_del_all.addEventListener('click', (e) => {
 /* functions */
 
 function addTask() {
-    let user_input = document.querySelector('#user_input').value;
-
-    if (user_input === '') {
-        msg.innerHTML = 'put your task in input above';
-    } else {
+    
         document.querySelector('#user_input').value = '';
         document.querySelector('#user_input').focus();
         msg.innerHTML = '';
@@ -89,8 +101,6 @@ function addTask() {
             oneDelete(btn_array);
 
         }
-    }
-
 }
 
 function liDisappear(delBtn) {
@@ -109,7 +119,7 @@ function oneDelete(array) {
 function getData(form) {
     const data = {};
     const formData = new FormData(form);
-    // FormData ściąga dane z całego formularza
+    // FormData get data from form
 
     for (let input of formData.entries()) {
         data[input[0]] = input[1];
@@ -126,6 +136,14 @@ function pushToArray(todo) {
         let d = new Date(b.item_date);
         return c - d;
     });
+    
+    // put item in localStorage
+    localStorage.setItem('todos', JSON.stringify(todos));
 
     return todos;
+}
+
+function getFromStorage() {
+    // when localStorage is empty assign empty array to todos
+    todos = JSON.parse(localStorage.getItem('todos')) || [] ;
 }
