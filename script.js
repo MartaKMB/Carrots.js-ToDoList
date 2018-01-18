@@ -1,59 +1,84 @@
-const btn_add = document.querySelector('#id_button_add');
-const btn_del_all = document.querySelector('#id_button_clear');
-//const btn_sort = document.querySelector('#btn_sort');
+(function () {
 
-const list = document.querySelector('#todo_list');
-const msg = document.querySelector('#message_for_user');
+    const inputUser = document.querySelector('#user_input');
+    const btnAdd = document.querySelector('#id_button_add');
+    const btnDelAll = document.querySelector('#id_button_clear');
+    const list = document.querySelector('#todo_list');
+    const msg = document.querySelector('#message_for_user');
 
-let todos = [];
+    let todos = [];
 
-const add_form = document.querySelector('#add_form');
+    const addForm = document.querySelector('#add_form');
 
-/* delete default tasks before add sth */
-// let btn_array_before = document.querySelectorAll('.delete_before');
-// oneDelete(btn_array_before);
+    /* get tasks from local storage */
 
-getFromStorage();
-addTask();
+    getFromStorage();
+    addTask();
 
-/* add tasks*/
+    /* delete tasks before add sth */
+    let btnArrayBefore = document.querySelectorAll('.delete_before');
+    oneDelete(btnArrayBefore);
 
-btn_add.addEventListener('click', (e) => {
-    pushToArray(getData(add_form));
-//    console.log(todos);
-    let user_input = document.querySelector('#user_input').value;
-    if (user_input === '') {
-        msg.innerHTML = 'put your task in input above';
-    } else {
-        addTask();
+    /* add tasks */
+
+    function getFromStorage() {
+        // when localStorage is empty assign empty array to todos
+        todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        console.log(todos);
     }
-});
 
-document.querySelector('#user_input').addEventListener('keydown', (e) => {
-    if (e.which === 13) {
-        
-        pushToArray(getData(add_form));
-        
-        let user_input = document.querySelector('#user_input').value;
+    function getData(form) {
+        const data = {};
+        const formData = new FormData(form);
+        // FormData get data from form
 
-    if (user_input === '') {
-        msg.innerHTML = 'put your task in input above';
-    } else {
-        addTask();
+        for (let input of formData.entries()) {
+            data[input[0]] = input[1];
+        }
+
+        return data;
     }
+
+    function pushToArray(todo) {
+        todos.push(todo);
+
+        todos.sort(function (a, b) {
+            let c = new Date(a.item_date);
+            let d = new Date(b.item_date);
+            return c - d;
+        });
+
+        // put item in localStorage
+        localStorage.setItem('todos', JSON.stringify(todos));
+
+        return todos;
     }
-});
 
-/* clear all */
+    function startApp() {
+        pushToArray(getData(addForm));
+        //    console.log(todos);
+        let userInput = document.querySelector('#user_input').value;
+        if (userInput === '') {
+            msg.innerHTML = 'put your task in input above';
+        } else {
+            addTask();
+        }
+    }
 
-btn_del_all.addEventListener('click', (e) => {
-    document.querySelector('#todo_list').innerHTML = '';
-});
+    btnAdd.addEventListener('click', (e) => {
+        startApp();
+    });
 
-/* functions */
+    inputUser.addEventListener('keydown', (e) => {
+        if (e.which === 13) {
+            startApp();
+        }
+    });
 
-function addTask() {
-    
+
+    function addTask() {
+
         document.querySelector('#user_input').value = '';
         document.querySelector('#user_input').focus();
         msg.innerHTML = '';
@@ -62,88 +87,71 @@ function addTask() {
 
         for (let i = 0; i < todos.length; i++) {
 
-            let item_content = todos[i].item;
-            let item_date = todos[i].item_date;
+            let itemContent = todos[i].item;
+            let itemDate = todos[i].item_date;
 
             /* create list element with editing possibility */
 
-            let li_list = document.createElement('li');
-            let input_list = document.createElement('textarea');
-            let notes_txt = document.createTextNode(item_content);
-            input_list.appendChild(notes_txt);
+            let liList = document.createElement('li');
+            let inputList = document.createElement('textarea');
+            let notesTxt = document.createTextNode(itemContent);
+            inputList.appendChild(notesTxt);
 
-            li_list.appendChild(input_list);
+            liList.appendChild(inputList);
 
             /* create input with date */
 
-            let p_date = document.createElement('p');
-            let p_date_txt = document.createTextNode('your deadline: ' + item_date);
+            let pDate = document.createElement('p');
+            let pDateTxt = document.createTextNode('your deadline: ' + itemDate);
 
-            p_date.appendChild(p_date_txt);
-            
-            li_list.appendChild(p_date);
+            pDate.appendChild(pDateTxt);
+
+            liList.appendChild(pDate);
 
             /* create button - for done tasks to delete them */
 
-            let btn_delete_list = document.createElement('button');
-            btn_delete_list.setAttribute('class', 'button_delete');
-            let btn_delete_txt = document.createTextNode('done!');
-            btn_delete_list.appendChild(btn_delete_txt);
+            let btnDeleteList = document.createElement('button');
+            btnDeleteList.setAttribute('class', 'button_delete');
+            let btnDeleteTxt = document.createTextNode('done!');
+            btnDeleteList.appendChild(btnDeleteTxt);
 
-            li_list.appendChild(btn_delete_list);
+            liList.appendChild(btnDeleteList);
 
             /* add all to list */
 
-            list.appendChild(li_list);
+            list.appendChild(liList);
             /* delete one task */
 
-            let btn_array = document.querySelectorAll('.button_delete');
-            oneDelete(btn_array);
+            let btnArray = document.querySelectorAll('.button_delete');
+            oneDelete(btnArray);
 
         }
-}
-
-function liDisappear(delBtn) {
-    delBtn.parentNode.style.display = 'none';
-}
-
-
-function oneDelete(array) {
-    for (let i = 0; i < array.length; i++) {
-        array[i].addEventListener('click', function () {
-            liDisappear(this);
-        });
-    }
-}
-
-function getData(form) {
-    const data = {};
-    const formData = new FormData(form);
-    // FormData get data from form
-
-    for (let input of formData.entries()) {
-        data[input[0]] = input[1];
     }
 
-    return data;
-}
 
-function pushToArray(todo) {
-    todos.push(todo);
+    /* delete task */
 
-    todos.sort(function (a, b) {
-        let c = new Date(a.item_date);
-        let d = new Date(b.item_date);
-        return c - d;
-    });
+    function liDisappear(delBtn) {
+        delBtn.parentNode.style.display = 'none';
+    }
     
-    // put item in localStorage
-    localStorage.setItem('todos', JSON.stringify(todos));
 
-    return todos;
-}
+    function oneDelete(array) {
+        for (let i = 0; i < array.length; i++) {
+            array[i].addEventListener('click', function () {
+                liDisappear(this);
+            });
+        }
+    }
 
-function getFromStorage() {
-    // when localStorage is empty assign empty array to todos
-    todos = JSON.parse(localStorage.getItem('todos')) || [] ;
-}
+    function clearData() {
+        localStorage.clear();
+    }
+
+    btnDelAll.addEventListener('click', (e) => {
+        list.innerHTML = '';
+        clearData();
+    });
+
+
+}());
