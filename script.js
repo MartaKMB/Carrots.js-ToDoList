@@ -16,13 +16,16 @@
     addTask();
 
     /* delete tasks before add sth */
+    
     let btnArrayBefore = document.querySelectorAll('.delete_before');
     oneDelete(btnArrayBefore);
 
     /* add tasks */
 
     function getFromStorage() {
+        
         // when localStorage is empty assign empty array to todos
+        
         todos = JSON.parse(localStorage.getItem('todos')) || [];
 
         console.log(todos);
@@ -30,9 +33,11 @@
 
     function getData(form) {
         const data = {};
-        const formData = new FormData(form);
+        
         // FormData get data from form
-
+        
+        const formData = new FormData(form);
+        
         for (let input of formData.entries()) {
             data[input[0]] = input[1];
         }
@@ -50,6 +55,7 @@
         });
 
         // put item in localStorage
+        
         localStorage.setItem('todos', JSON.stringify(todos));
 
         return todos;
@@ -120,6 +126,7 @@
             /* add all to list */
 
             list.appendChild(liList);
+            
             /* delete one task */
 
             let btnArray = document.querySelectorAll('.button_delete');
@@ -134,10 +141,9 @@
     function liDisappear(delBtn) {
         delBtn.parentNode.style.display = 'none';
     }
-    
 
     function oneDelete(array) {
-        for (let i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {      
             array[i].addEventListener('click', function () {
                 liDisappear(this);
             });
@@ -152,6 +158,4 @@
         list.innerHTML = '';
         clearData();
     });
-
-
 }());
