@@ -5,18 +5,13 @@
     const btnDelAll = document.querySelector('#id_button_clear');
     const list = document.querySelector('#todo_list');
     const msg = document.querySelector('#message_for_user');
-
-    let todos = [];
-
     const addForm = document.querySelector('#add_form');
 
     /* get tasks from local storage */
-
     getFromStorage();
-    addTask();
+    addTask(todos);
 
-    /* delete tasks before add sth */
-    
+    /* delete tasks before add sth */    
     let btnArrayBefore = document.querySelectorAll('.delete_before');
     oneDelete(btnArrayBefore);
 
@@ -24,18 +19,15 @@
 
     function getFromStorage() {
         
-        // when localStorage is empty assign empty array to todos
-        
+        /* when localStorage is empty assign empty array to todos */
         todos = JSON.parse(localStorage.getItem('todos')) || [];
-
-        console.log(todos);
+        return todos;
     }
 
     function getData(form) {
         const data = {};
         
-        // FormData get data from form
-        
+        /* FormData get data from form */
         const formData = new FormData(form);
         
         for (let input of formData.entries()) {
@@ -48,14 +40,11 @@
     function pushToArray(todo) {
         todos.push(todo);
 
-        todos.sort(function (a, b) {
-            let c = new Date(a.item_date);
-            let d = new Date(b.item_date);
-            return c - d;
+        todos.sort(function (dateToSortA, dateToSortB) {
+            return new Date(dateToSortA.item_date) - new Date(dateToSortB.item_date);
         });
 
-        // put item in localStorage
-        
+        /* put item in localStorage */
         localStorage.setItem('todos', JSON.stringify(todos));
 
         return todos;
@@ -63,12 +52,11 @@
 
     function startApp() {
         pushToArray(getData(addForm));
-        //    console.log(todos);
         let userInput = document.querySelector('#user_input').value;
         if (userInput === '') {
             msg.innerHTML = 'put your task in input above';
         } else {
-            addTask();
+            addTask(todos);
         }
     }
 
@@ -83,7 +71,7 @@
     });
 
 
-    function addTask() {
+    function addTask(arrayWithTasks) {
 
         document.querySelector('#user_input').value = '';
         document.querySelector('#user_input').focus();
@@ -91,10 +79,10 @@
 
         document.querySelector('#todo_list').innerHTML = '';
 
-        for (let i = 0; i < todos.length; i++) {
+        for (let i = 0; i < arrayWithTasks.length; i++) {
 
-            let itemContent = todos[i].item;
-            let itemDate = todos[i].item_date;
+            let itemContent = arrayWithTasks[i].item;
+            let itemDate = arrayWithTasks[i].item_date;
 
             /* create list element with editing possibility */
 
@@ -135,7 +123,6 @@
         }
     }
 
-
     /* delete task */
 
     function liDisappear(delBtn) {
@@ -143,11 +130,26 @@
     }
 
     function oneDelete(array) {
-        for (let i = 0; i < array.length; i++) {      
-            array[i].addEventListener('click', function () {
-                liDisappear(this);
-            });
+
+        /* attachEvent handler, https://code.tutsplus.com/tutorials/quick-tip-javascript-event-delegation-in-4-minutes--net-8961 */
+        function addEvent(obj, evt, fn, capture) {
+            if ( window.attachEvent ) {
+                obj.attachEvent("on" + evt, fn);
+            }
+            else {
+                if ( !capture ) capture = false;
+                obj.addEventListener(evt, fn, capture)
+            }
         }
+
+        addEvent(list, "click", function(e) {
+          let target = e ? e.target : window.event.srcElement;
+          if ( target.nodeName.toLowerCase() === 'button' ) {
+             liDisappear(target);
+             return false;
+          }
+        });
+
     }
 
     function clearData() {
